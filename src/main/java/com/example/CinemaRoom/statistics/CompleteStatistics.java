@@ -9,13 +9,17 @@ public class CompleteStatistics {
     }
 
     public void addSoldTicket(int income) {
-        statistics.addSoldTicket(income);
+        statistics.setIncome(statistics.getIncome() + income);
+        statistics.setAvailable(statistics.getAvailable() - 1);
+        statistics.setPurchased(statistics.getPurchased() + 1);
+
     }
     public void returnTicket(int income) {
-        statistics.returnTicket(income);
+        statistics.setIncome(statistics.getIncome() - income);
+        statistics.setAvailable(statistics.getAvailable() + 1);
+        statistics.setPurchased(statistics.getPurchased() - 1);
     }
     public Statistics getStatistics() {
         return statistics;
     }
-
 }

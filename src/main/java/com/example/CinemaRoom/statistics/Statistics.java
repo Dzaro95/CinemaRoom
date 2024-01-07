@@ -14,16 +14,6 @@ public class Statistics {
     public int getIncome() {
         return income;
     }
-    public void addSoldTicket(int income) {
-        this.income += income;
-        this.available -= 1;
-        this.purchased += 1;
-    }
-    public void returnTicket(int income) {
-        this.income -= income;
-        available += 1;
-        this.purchased -= 1;
-    }
 
     public int getAvailable() {
         return available;
@@ -36,11 +26,9 @@ public class Statistics {
     public void setIncome(int income) {
         this.income = income;
     }
-
     public void setAvailable(int available) {
         this.available = available;
     }
-
     public void setPurchased(int purchased) {
         this.purchased = purchased;
     }
