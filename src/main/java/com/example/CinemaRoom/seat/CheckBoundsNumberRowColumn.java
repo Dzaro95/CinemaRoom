@@ -1,4 +1,4 @@
-package com.example.CinemaRoom.purchase;
+package com.example.CinemaRoom.seat;
 
 import com.example.CinemaRoom.exception.PurchaseInfoException;
 import com.example.CinemaRoom.seat.Seats;

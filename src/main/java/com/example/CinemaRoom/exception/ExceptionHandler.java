@@ -21,21 +21,4 @@ public class ExceptionHandler {
 
         return new ResponseEntity<>(formatException, HttpStatus.UNAUTHORIZED);
     }
-
-
-
-    /*
-    @ExceptionHandler({PurchaseInfoException.class})
-    public ResponseEntity<Object> handleFlightAndTicketNotFound(RuntimeException e) {
-
-        Map<String, Object> body = new HashMap<>();
-        //body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", e.getMessage());
-
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
-
-     */
-
-
 }
