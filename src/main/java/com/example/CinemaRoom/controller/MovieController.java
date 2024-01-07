@@ -26,7 +26,7 @@ public class MovieController {
     }
 
     @GetMapping("/stats")
-    public Statistics showStatistics(@Validated @RequestParam Optional<String> password) {//zapytać o wyjaśnienie optional
+    public Statistics showStatistics(@Validated @RequestParam Optional<String> password) {
         if (Password.checkPassword(password)) {
             return completeStatistics.getStatistics();
         } else {
