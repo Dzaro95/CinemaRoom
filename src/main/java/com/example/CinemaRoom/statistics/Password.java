@@ -1,14 +1,10 @@
 package com.example.CinemaRoom.statistics;
 
-import java.util.Optional;
-
 public class Password {
-    private static final Optional<String> passwordAccess = "super_secret".describeConstable();
-    public static boolean checkPassword(Optional<String> passwordCheck) {
-        if (passwordAccess.equals(passwordCheck)) {
-            return true;
-        } else {
-            return false;
-        }
+
+    private static final String PASSWORD = "super_secret";
+
+    public static boolean isValid(String password) {
+       return  PASSWORD.equals(password);
     }
 }

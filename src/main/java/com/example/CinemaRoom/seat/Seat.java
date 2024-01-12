@@ -1,5 +1,8 @@
 package com.example.CinemaRoom.seat;
 
+import com.example.CinemaRoom.exception.PurchaseException;
+import com.example.CinemaRoom.service.SeatsService;
+
 public class Seat {
     private int row;
     private int column;
