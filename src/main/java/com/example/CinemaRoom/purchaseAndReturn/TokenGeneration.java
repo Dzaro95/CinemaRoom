@@ -1,4 +1,4 @@
-package com.example.CinemaRoom.purchase;
+package com.example.CinemaRoom.purchaseAndReturn;
 
 import java.util.UUID;
 

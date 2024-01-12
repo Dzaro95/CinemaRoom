@@ -1,14 +1,14 @@
-package com.example.CinemaRoom.statistics;
+package com.example.CinemaRoom.service;
 
-import com.example.CinemaRoom.seat.SeatsInCinema;
+import com.example.CinemaRoom.statistics.Statistics;
 
-public class CompleteStatistics {
-    private Statistics statistics = new Statistics(SeatsInCinema.numberOfSeatsInCinema());
+public class StatisticsService {
+    private Statistics statistics = new Statistics(SeatsService.numberOfSeatsInCinema());
 
-    public CompleteStatistics() {
+    public StatisticsService() {
     }
 
-    public void addSoldTicket(int income) {
+    public void addPurchasedTicket(int income) {
         statistics.setIncome(statistics.getIncome() + income);
         statistics.setAvailable(statistics.getAvailable() - 1);
         statistics.setPurchased(statistics.getPurchased() + 1);

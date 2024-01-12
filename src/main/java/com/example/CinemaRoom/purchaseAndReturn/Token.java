@@ -1,4 +1,4 @@
-package com.example.CinemaRoom.purchase;
+package com.example.CinemaRoom.purchaseAndReturn;
 
 public class Token {
     private String token;
