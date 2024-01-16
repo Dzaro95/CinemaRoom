@@ -1,36 +1,44 @@
 package com.example.CinemaRoom.service;
 
 
-import com.example.CinemaRoom.seat.Seat;
-import com.example.CinemaRoom.seat.SeatsResponse;
+import com.example.CinemaRoom.model.Seat;
+import com.example.CinemaRoom.dto.SeatsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SeatsService {
-    public static final int ROWS = 9;
-    public static final int COLUMNS = 9;
-    private static final List<Seat> SEATS = seatList(ROWS,COLUMNS);
+    public final int ROWS = 9;
+    public final int COLUMNS = 9;
+    private final List<Seat> SEATS;
 
-
-    public static List<Seat> seatList(int rows, int columns) {
-        List<Seat> seatList = new ArrayList<>();
-        for (int row = 1; row <= rows; row++) {
-            for(int column = 1; column <= columns; column++) {
-                seatList.add(new Seat(row,column));
-            }
-        }
-        return seatList;
-    }
 
     public SeatsService() {
+        List<Seat> seatList = new ArrayList<>();
+        for (int row = 1; row <= this.ROWS; row++) {
+            for(int column = 1; column <= this.COLUMNS; column++) {
+                seatList.add(new Seat(row,column,priceResponse(row)));
+            }
+        }
+        this.SEATS = seatList;
+    }
+    public int priceResponse(int row) {
+
+        return row <= 4 ? 10 : 8;
     }
 
-    public static SeatsResponse seats() {
-        return new SeatsResponse(ROWS,COLUMNS,SEATS);
+    public int getROWS() {
+        return ROWS;
     }
 
-    public static int numberOfSeatsInCinema() {
+    public int getCOLUMNS() {
+        return COLUMNS;
+    }
+
+    public List<Seat> getSEATS() {
+        return SEATS;
+    }
+    public int numberOfSeats() {
         return ROWS * COLUMNS;
     }
 

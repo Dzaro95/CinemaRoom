@@ -1,8 +1,13 @@
-package com.example.CinemaRoom.purchaseAndReturn;
+package com.example.CinemaRoom.dto;
 
-import com.example.CinemaRoom.seat.Seat;
+import com.example.CinemaRoom.model.Seat;
 
-public record TicketReturn(Seat ticket) {}
+public record SeatDTO(
+    int row,
+
+    int column,
+    int price)
+{ }
 /*
 public class TicketReturn {
     private Seat ticket;

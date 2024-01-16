@@ -1,5 +1,7 @@
-package com.example.CinemaRoom.seat;
+package com.example.CinemaRoom.dto;
 
+
+import com.example.CinemaRoom.model.Seat;
 
 import java.util.List;
 

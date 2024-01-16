@@ -1,24 +1,26 @@
 package com.example.CinemaRoom.service;
 
-import com.example.CinemaRoom.statistics.Statistics;
+import com.example.CinemaRoom.model.Statistics;
 
 public class StatisticsService {
-    private Statistics statistics = new Statistics(SeatsService.numberOfSeatsInCinema());
+    private Statistics statistics;
 
-    public StatisticsService() {
+    public StatisticsService(int available) {
+        this.statistics = new Statistics(available);
     }
 
-    public void addPurchasedTicket(int income) {
-        statistics.setIncome(statistics.getIncome() + income);
-        statistics.setAvailable(statistics.getAvailable() - 1);
-        statistics.setPurchased(statistics.getPurchased() + 1);
+    public Statistics registerPurchase(Statistics statistics, int income) {
+        return new Statistics(statistics.income() + income,
+                statistics.available() - 1,
+                statistics.purchased() + 1);
 
     }
-    public void returnTicket(int income) {
-        statistics.setIncome(statistics.getIncome() - income);
-        statistics.setAvailable(statistics.getAvailable() + 1);
-        statistics.setPurchased(statistics.getPurchased() - 1);
+    public Statistics registerReturn(Statistics statistics, int income) {
+        return new Statistics(statistics.income() - income,
+                statistics.available() + 1,
+                statistics.purchased() - 1);
     }
+
     public Statistics getStatistics() {
         return statistics;
     }

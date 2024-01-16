@@ -1,6 +1,16 @@
-package com.example.CinemaRoom.statistics;
+package com.example.CinemaRoom.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "statistics")
+public record Statistics(int income, int available,int purchased) {
+    public Statistics(int available) {
+        this(0,available,0);
+    }
+}
+/*
 public class Statistics {
     private int income;
     private int available;
@@ -11,6 +21,13 @@ public class Statistics {
         this.income = 0;
         this.purchased = 0;
     }
+
+    public Statistics(int income, int available, int purchased) {
+        this.income = income;
+        this.available = available;
+        this.purchased = purchased;
+    }
+
     public int getIncome() {
         return income;
     }
@@ -33,4 +50,6 @@ public class Statistics {
         this.purchased = purchased;
     }
 }
+
+ */
 
