@@ -1,6 +1,8 @@
 package com.example.CinemaRoom.service;
 
 
+import com.example.CinemaRoom.dto.SeatResponse;
+import com.example.CinemaRoom.exception.PurchaseException;
 import com.example.CinemaRoom.model.Seat;
 
 import java.util.ArrayList;
@@ -24,6 +26,14 @@ public class SeatsService {
     public int priceResponse(int row) {
 
         return row <= 4 ? 10 : 8;
+    }
+    public SeatResponse findSeat(int row, int column) {
+        Seat seat = new Seat(row,column,row <= 4 ? 10 : 8);
+        if (SEATS.contains(seat)) {
+            return new SeatResponse(seat.row(),seat.column(),seat.price());
+        } else {
+            throw new PurchaseException("The number of a row or a column is out of bounds!");
+        }
     }
 
     public int getROWS() {

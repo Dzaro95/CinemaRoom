@@ -1,66 +1,62 @@
 package com.example.CinemaRoom.service;
 
+import com.example.CinemaRoom.dto.SeatResponse;
 import com.example.CinemaRoom.dto.StatisticsResponse;
 import com.example.CinemaRoom.exception.PurchaseException;
-import com.example.CinemaRoom.dto.TicketDTO;
-import com.example.CinemaRoom.dto.SeatsDTO;
+import com.example.CinemaRoom.dto.TicketResponse;
 import com.example.CinemaRoom.model.Seat;
 
 import java.util.*;
 
 public class PurchaseService {
     private StatisticsService statisticsService;
-
-    private SeatsDTO seatsDTO;
-
-    private TicketDTO ticketDTO;
-    private Map<String, SeatsDTO> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
-
-    public PurchaseService() {
-    }
+    private SeatResponse seatResponse;
+    private TicketResponse ticketResponse;
+    private Map<String, SeatResponse> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
 
     public PurchaseService(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
     }
 
-    public SeatsDTO returnTicket(String uuid) {
+    public Seat returnTicket(String uuid) {
         if(allTicketPurchased.containsKey(uuid)) {
-            seatsDTO = allTicketPurchased.get(uuid);
+            seatResponse = allTicketPurchased.get(uuid);
             allTicketPurchased.remove(uuid);
-            return seatsDTO;
+            statisticsService.registerReturn(statisticsService.getStatistics(),seatResponse.price());
+            return new Seat(seatResponse.row(), seatResponse.column(), seatResponse.price());
         } else {
             throw new PurchaseException("Wrong token!");
         }
     }
-/*
-    public void addTicketPurchase(Seat seat) {
+
+    public TicketResponse purchaseSeat(SeatResponse seat) {
         if (checkPurchased(seat)) {
             throw new PurchaseException("The ticket has been already purchased!");
         } else {
-            ticketDTO = new TicketDTO(UUID.randomUUID().toString(),seat);
-            allTicketPurchased.put(ticketDTO.token(), ticketDTO.ticket());
+            ticketResponse = new TicketResponse(UUID.randomUUID().toString(),seat);
+            allTicketPurchased.put(ticketResponse.token(), ticketResponse.ticket());
+            statisticsService.registerPurchase(statisticsService.getStatistics(), ticketResponse.ticket().price());
+            return ticketResponse;
         }
     }
-    public boolean checkPurchased(Seat seat) {
+    public boolean checkPurchased(SeatResponse seat) {
         boolean check = false;
-        for(Seat seatCheck : allTicketPurchased.values()) {
+        for(SeatResponse seatCheck : allTicketPurchased.values()) {
             if(seatCheck.row() == seat.row() && seatCheck.column() == seat.column()) {
                 check = true;
             }
         }
         return check;
     }
-    public TicketDTO getTicketPurchase() {
-        return ticketDTO;
+    public TicketResponse getTicketPurchase() {
+        return ticketResponse;
     }
 
-    public SeatsDTO getTicketReturn() {
-        return seatsDTO;
+    public SeatResponse getTicketReturn() {
+        return seatResponse;
     }
 
-    public StatisticsResponse getStatisticResponse() {
-        return statisticsResponse;
+    public StatisticsService getStatisticsService() {
+        return statisticsService;
     }
-
- */
 }

@@ -6,8 +6,6 @@ import com.example.CinemaRoom.service.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class MovieController {
 
@@ -30,19 +28,17 @@ public class MovieController {
     }
 
     @PostMapping("/return")
-    public SeatsDTO returnTicket(@RequestBody TokenRequest tokenRequest) {
-        SeatsDTO seat = purchaseService.returnTicket(tokenRequest.token());
-        //statisticsService.registerReturn(purchaseService.getTicketReturn().ticket().price());
-        return purchaseService.getTicketReturn();
+    public SeatResponse returnTicket(@RequestBody TokenRequest tokenRequest) {
+        Seat seat = purchaseService.returnTicket(tokenRequest.token());
+        return new SeatResponse(seat.row(),seat.column(),seat.price());
 
     }
 
     @PostMapping("/purchase")
-    public TicketDTO ticketPurchase(@Validated @RequestBody Seat request) {
-        Seat ticketPurchase = new Seat(request.row(), request.column());
-        purchaseService.addTicketPurchase(ticketPurchase);
-        statisticsService.registerPurchase(ticketPurchase.price());
-        return purchaseService.getTicketPurchase();
+    public TicketResponse ticketPurchase(@Validated @RequestBody Seat request) {
+        SeatResponse ticketPurchase = seatsService.findSeat(request.row(), request.column());
+        return new TicketResponse(purchaseService.purchaseSeat(ticketPurchase).token(),
+                purchaseService.purchaseSeat(ticketPurchase).ticket());
     }
 
 
