@@ -9,6 +9,10 @@ public class StatisticsService {
         this.statistics = new Statistics(available);
     }
 
+    public StatisticsService(Statistics statistics) {
+        this.statistics = statistics;
+    }
+
     public Statistics registerPurchase(Statistics statistics, int income) {
         return new Statistics(statistics.income() + income,
                 statistics.available() - 1,
@@ -23,5 +27,9 @@ public class StatisticsService {
 
     public Statistics getStatistics() {
         return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
     }
 }

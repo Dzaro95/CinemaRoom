@@ -21,7 +21,7 @@ public class PurchaseService {
         if(allTicketPurchased.containsKey(uuid)) {
             seatResponse = allTicketPurchased.get(uuid);
             allTicketPurchased.remove(uuid);
-            statisticsService.registerReturn(statisticsService.getStatistics(),seatResponse.price());
+            statisticsService.setStatistics(statisticsService.registerReturn(statisticsService.getStatistics(),seatResponse.price()));
             return new Seat(seatResponse.row(), seatResponse.column(), seatResponse.price());
         } else {
             throw new PurchaseException("Wrong token!");
@@ -34,7 +34,9 @@ public class PurchaseService {
         } else {
             ticketResponse = new TicketResponse(UUID.randomUUID().toString(),seat);
             allTicketPurchased.put(ticketResponse.token(), ticketResponse.ticket());
-            statisticsService.registerPurchase(statisticsService.getStatistics(), ticketResponse.ticket().price());
+            statisticsService.setStatistics(statisticsService.registerPurchase(
+                    statisticsService.getStatistics(),
+                    ticketResponse.ticket().price()));
             return ticketResponse;
         }
     }
