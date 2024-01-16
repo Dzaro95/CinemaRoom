@@ -1,13 +1,17 @@
 package com.example.CinemaRoom.dto;
 
 import com.example.CinemaRoom.model.Seat;
+import lombok.Data;
 
-public record SeatDTO(
-    int row,
+import java.util.List;
+@Data
+public class SeatsDTO {
+        //long id;
+        long rows;
 
-    int column,
-    int price)
-{ }
+        int columns;
+        List<Seat> seat;
+}
 /*
 public class TicketReturn {
     private Seat ticket;

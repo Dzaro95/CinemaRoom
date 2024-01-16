@@ -7,6 +7,5 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
 @Table(name = "ticket")
 public record Ticket (String token, Seat ticket) { }

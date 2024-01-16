@@ -3,7 +3,6 @@ package com.example.CinemaRoom.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
 @Table(name = "statistics")
 public record Statistics(int income, int available,int purchased) {
     public Statistics(int available) {

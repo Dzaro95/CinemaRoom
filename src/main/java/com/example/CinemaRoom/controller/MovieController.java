@@ -2,23 +2,27 @@ package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
 import com.example.CinemaRoom.model.Seat;
-import com.example.CinemaRoom.service.SeatsService;
-import com.example.CinemaRoom.service.PurchaseService;
-import com.example.CinemaRoom.service.StatisticsService;
-import com.example.CinemaRoom.service.AuthenticationService;
+import com.example.CinemaRoom.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class MovieController {
-    private final SeatsService seatsService = new SeatsService();
-    private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
+
+    @Autowired
+    private SeatService seatService;
+    private final SeatsInformation seatsInformation = new SeatsInformation();
+    private final StatisticsService statisticsService = new StatisticsService(seatsInformation.numberOfSeats());
     private final PurchaseService purchaseService = new PurchaseService(statisticsService);
     private final AuthenticationService authenticationService = new AuthenticationService();
 
     @GetMapping("/seats")
-    public SeatsResponse getSeats() {
-        return new SeatsResponse(seatsService.getROWS(), seatsService.getCOLUMNS(), seatsService.getSEATS());
+    public List<SeatsDTO> getSeats() {
+        return seatService.getAllSeat();
+        //return new SeatsResponse(seatsInformation.getROWS(), seatsInformation.getCOLUMNS(), seatsInformation.getSEATS());
     }
 
     @GetMapping("/stats")
@@ -26,10 +30,10 @@ public class MovieController {
         authenticationService.isValid(password);
         return new StatisticsResponse(statisticsService.getStatistics());
     }
-
+/*
     @PostMapping("/return")
-    public SeatDTO returnTicket(@RequestBody TokenRequest tokenRequest) {
-        SeatDTO seat = purchaseService.returnTicket(tokenRequest.token());
+    public SeatsDTO returnTicket(@RequestBody TokenRequest tokenRequest) {
+        SeatsDTO seat = purchaseService.returnTicket(tokenRequest.token());
         //statisticsService.registerReturn(purchaseService.getTicketReturn().ticket().price());
         return purchaseService.getTicketReturn();
 
@@ -42,4 +46,6 @@ public class MovieController {
         statisticsService.registerPurchase(ticketPurchase.price());
         return purchaseService.getTicketPurchase();
     }
+
+ */
 }

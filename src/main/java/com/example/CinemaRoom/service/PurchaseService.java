@@ -3,7 +3,7 @@ package com.example.CinemaRoom.service;
 import com.example.CinemaRoom.dto.StatisticsResponse;
 import com.example.CinemaRoom.exception.PurchaseException;
 import com.example.CinemaRoom.dto.TicketDTO;
-import com.example.CinemaRoom.dto.SeatDTO;
+import com.example.CinemaRoom.dto.SeatsDTO;
 import com.example.CinemaRoom.model.Seat;
 
 import java.util.*;
@@ -11,10 +11,10 @@ import java.util.*;
 public class PurchaseService {
     private StatisticsService statisticsService;
 
-    private SeatDTO seatDTO;
+    private SeatsDTO seatsDTO;
 
     private TicketDTO ticketDTO;
-    private Map<String, SeatDTO> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
+    private Map<String, SeatsDTO> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
 
     public PurchaseService() {
     }
@@ -23,16 +23,16 @@ public class PurchaseService {
         this.statisticsService = statisticsService;
     }
 
-    public SeatDTO returnTicket(String uuid) {
+    public SeatsDTO returnTicket(String uuid) {
         if(allTicketPurchased.containsKey(uuid)) {
-            seatDTO = allTicketPurchased.get(uuid);
+            seatsDTO = allTicketPurchased.get(uuid);
             allTicketPurchased.remove(uuid);
-            return seatDTO;
+            return seatsDTO;
         } else {
             throw new PurchaseException("Wrong token!");
         }
     }
-
+/*
     public void addTicketPurchase(Seat seat) {
         if (checkPurchased(seat)) {
             throw new PurchaseException("The ticket has been already purchased!");
@@ -44,7 +44,7 @@ public class PurchaseService {
     public boolean checkPurchased(Seat seat) {
         boolean check = false;
         for(Seat seatCheck : allTicketPurchased.values()) {
-            if(seatCheck.getRow() == seat.getRow() && seatCheck.getColumn() == seat.getColumn()) {
+            if(seatCheck.row() == seat.row() && seatCheck.column() == seat.column()) {
                 check = true;
             }
         }
@@ -54,11 +54,13 @@ public class PurchaseService {
         return ticketDTO;
     }
 
-    public SeatDTO getTicketReturn() {
-        return seatDTO;
+    public SeatsDTO getTicketReturn() {
+        return seatsDTO;
     }
 
     public StatisticsResponse getStatisticResponse() {
         return statisticsResponse;
     }
+
+ */
 }

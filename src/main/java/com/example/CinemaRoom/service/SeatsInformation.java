@@ -2,22 +2,21 @@ package com.example.CinemaRoom.service;
 
 
 import com.example.CinemaRoom.model.Seat;
-import com.example.CinemaRoom.dto.SeatsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeatsService {
+public class SeatsInformation {
     public final int ROWS = 9;
     public final int COLUMNS = 9;
     private final List<Seat> SEATS;
 
 
-    public SeatsService() {
+    public SeatsInformation() {
         List<Seat> seatList = new ArrayList<>();
         for (int row = 1; row <= this.ROWS; row++) {
             for(int column = 1; column <= this.COLUMNS; column++) {
-                seatList.add(new Seat(row,column,priceResponse(row)));
+                seatList.add(new Seat(column,row,column,priceResponse(row)));
             }
         }
         this.SEATS = seatList;
