@@ -16,7 +16,7 @@ public class SeatsInformation {
         List<Seat> seatList = new ArrayList<>();
         for (int row = 1; row <= this.ROWS; row++) {
             for(int column = 1; column <= this.COLUMNS; column++) {
-                seatList.add(new Seat(column,row,column,priceResponse(row)));
+                seatList.add(new Seat(row,column,row <= 4 ? 10 : 8));
             }
         }
         this.SEATS = seatList;

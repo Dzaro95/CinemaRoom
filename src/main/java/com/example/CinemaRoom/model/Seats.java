@@ -14,12 +14,12 @@ import java.util.List;
 public class Seats {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     @Column(name = "rows")
     private int rows;
     @Column(name = "columns")
     private int columns;
-    @Column(name = "seat")
-    private List<Seat> seat;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "row")
+    private Seat seats;
 
 }

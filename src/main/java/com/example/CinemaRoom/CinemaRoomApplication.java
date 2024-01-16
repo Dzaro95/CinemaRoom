@@ -30,10 +30,9 @@ public class CinemaRoomApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		SeatsInformation seatsInformation = new SeatsInformation();
 		Seats seats = new Seats();
-		seats.setId(1);
 		seats.setRows(seatsInformation.ROWS);
 		seats.setColumns(seatsInformation.COLUMNS);
-		seats.setSeat(seatsInformation.getSEATS());
+		seats.setSeats(seatsInformation.getSEATS().get(0));
 		seatsRepository.save(seats);
 	}
 }

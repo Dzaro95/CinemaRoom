@@ -3,9 +3,9 @@ package com.example.CinemaRoom.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import javax.persistence.Id;
 
 
 @Data
@@ -15,13 +15,19 @@ import javax.persistence.*;
 @Table(name = "seat")
 public class Seat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Column(name = "row")
+    /*
     private long id;
-    int row;
+    @Column(name = "row")
+
+     */
+    private int row;
     @Column(name = "column")
-    int column;
+    private int column;
     @Column(name = "price")
-    int price;
+    private int price;
+
 }
 
 
