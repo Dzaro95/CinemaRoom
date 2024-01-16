@@ -3,7 +3,6 @@ package com.example.CinemaRoom.controller;
 import com.example.CinemaRoom.dto.*;
 import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +11,16 @@ import java.util.List;
 @RestController
 public class MovieController {
 
-    @Autowired
-    private SeatService seatService;
-    private final SeatsInformation seatsInformation = new SeatsInformation();
-    private final StatisticsService statisticsService = new StatisticsService(seatsInformation.numberOfSeats());
+
+    private final SeatsService seatsService = new SeatsService();
+    private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
     private final PurchaseService purchaseService = new PurchaseService(statisticsService);
     private final AuthenticationService authenticationService = new AuthenticationService();
 
     @GetMapping("/seats")
-    public List<SeatsDTO> getSeats() {
-        return seatService.getAllSeat();
-        //return new SeatsResponse(seatsInformation.getROWS(), seatsInformation.getCOLUMNS(), seatsInformation.getSEATS());
+    public SeatsResponse getSeats() {
+
+        return new SeatsResponse(seatsService.getROWS(), seatsService.getCOLUMNS(), seatsService.getSEATS());
     }
 
     @GetMapping("/stats")
@@ -30,7 +28,7 @@ public class MovieController {
         authenticationService.isValid(password);
         return new StatisticsResponse(statisticsService.getStatistics());
     }
-/*
+
     @PostMapping("/return")
     public SeatsDTO returnTicket(@RequestBody TokenRequest tokenRequest) {
         SeatsDTO seat = purchaseService.returnTicket(tokenRequest.token());
@@ -47,5 +45,5 @@ public class MovieController {
         return purchaseService.getTicketPurchase();
     }
 
- */
+
 }
