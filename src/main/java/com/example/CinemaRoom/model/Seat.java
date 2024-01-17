@@ -11,11 +11,9 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "seat")
 public class Seat {
-    @Id
-    @GeneratedValue
+
     @Column(name = "row")
     /*
     private long id;
