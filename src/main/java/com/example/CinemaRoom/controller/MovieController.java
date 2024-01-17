@@ -17,8 +17,8 @@ public class MovieController {
         return new SeatsResponse(seatsService.getROWS(), seatsService.getCOLUMNS(), seatsService.getSEATS());
     }
     @GetMapping("/stats")
-    public StatisticsResponse showStatistics(@RequestParam(name = "password" ,required = false) String password) {
-        authenticationService.isValid(password);
+    public StatisticsResponse showStatistics(@RequestParam(name = "password" ,required = false) String passwordRequest) {
+        authenticationService.isValid(passwordRequest);
         return new StatisticsResponse(purchaseService.getStatisticsService().getStatistics());
     }
     @PostMapping("/return")
@@ -28,9 +28,9 @@ public class MovieController {
 
     }
     @PostMapping("/purchase")
-    public TicketResponse ticketPurchase(@Validated @RequestBody Seat request) {
-        SeatResponse ticketPurchase = seatsService.findSeat(request.row(), request.column());
-        purchaseService.purchaseSeat(ticketPurchase);
+    public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
+        Seat seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
+        purchaseService.purchaseSeat(seat);
         return new TicketResponse(purchaseService.getTicketPurchase().token(),
                 purchaseService.getTicketPurchase().ticket());
     }

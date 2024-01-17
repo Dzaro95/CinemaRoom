@@ -21,10 +21,10 @@ public class SeatsService {
         }
         this.SEATS = seatList;
     }
-    public SeatResponse findSeat(int row, int column) {
+    public Seat findSeat(int row, int column) {
         Seat seat = new Seat(row,column,row <= 4 ? 10 : 8);
         if (SEATS.contains(seat)) {
-            return new SeatResponse(seat.row(),seat.column(),seat.price());
+            return seat;
         } else {
             throw new PurchaseException("The number of a row or a column is out of bounds!");
         }

@@ -15,9 +15,6 @@ public class PurchaseService {
     public PurchaseService(int available) {
         this.statisticsService = new StatisticsService(available);
     }
-    public PurchaseService(StatisticsService statisticsService) {
-        this.statisticsService = statisticsService;
-    }
     public Seat returnTicket(String uuid) {
         if(allTicketPurchased.containsKey(uuid)) {
             seatResponse = allTicketPurchased.get(uuid);
@@ -28,19 +25,19 @@ public class PurchaseService {
             throw new PurchaseException("Wrong token!");
         }
     }
-    public TicketResponse purchaseSeat(SeatResponse seat) {
+    public TicketResponse purchaseSeat(Seat seat) {
         if (checkPurchased(seat)) {
             throw new PurchaseException("The ticket has been already purchased!");
         } else {
-            ticketResponse = new TicketResponse(UUID.randomUUID().toString(),seat);
+            ticketResponse = new TicketResponse(UUID.randomUUID().toString(),new SeatResponse(seat.row(),seat.column(),seat.price()));
             allTicketPurchased.put(ticketResponse.token(), ticketResponse.ticket());
             statisticsService.setStatistics(statisticsService.registerPurchase(
                     statisticsService.getStatistics(),
                     ticketResponse.ticket().price()));
-            return ticketResponse;
+            return new TicketResponse(ticketResponse.token(),ticketResponse.ticket());
         }
     }
-    public boolean checkPurchased(SeatResponse seat) {
+    public boolean checkPurchased(Seat seat) {
         boolean check = false;
         for(SeatResponse seatCheck : allTicketPurchased.values()) {
             if(seatCheck.row() == seat.row() && seatCheck.column() == seat.column()) {
@@ -51,9 +48,6 @@ public class PurchaseService {
     }
     public TicketResponse getTicketPurchase() {
         return ticketResponse;
-    }
-    public SeatResponse getTicketReturn() {
-        return seatResponse;
     }
     public StatisticsService getStatisticsService() {
         return statisticsService;
