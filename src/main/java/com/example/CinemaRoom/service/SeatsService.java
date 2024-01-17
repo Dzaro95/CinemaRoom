@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SeatsService {
-    public final int ROWS = 9;
-    public final int COLUMNS = 9;
+    private final int ROWS = 9;
+    private final int COLUMNS = 9;
     private final List<Seat> SEATS;
     public SeatsService() {
         List<Seat> seatList = new ArrayList<>();
