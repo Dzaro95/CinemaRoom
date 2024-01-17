@@ -1,26 +1,27 @@
 package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
-import com.example.CinemaRoom.model.Seat;
+//import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class MovieController {
 
-    @Autowired
-    private SeatService seatService;
+
+    private final SeatService seatService;
     private final SeatsInformation seatsInformation = new SeatsInformation();
     private final StatisticsService statisticsService = new StatisticsService(seatsInformation.numberOfSeats());
     private final PurchaseService purchaseService = new PurchaseService(statisticsService);
     private final AuthenticationService authenticationService = new AuthenticationService();
 
     @GetMapping("/seats")
-    public List<SeatsDTO> getSeats() {
+    public List<SeatsInformation> getSeats() {
         return seatService.getAllSeat();
         //return new SeatsResponse(seatsInformation.getROWS(), seatsInformation.getCOLUMNS(), seatsInformation.getSEATS());
     }

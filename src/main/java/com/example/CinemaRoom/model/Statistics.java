@@ -3,7 +3,7 @@ package com.example.CinemaRoom.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Table(name = "statistics")
+//@Table(name = "statistics")
 public record Statistics(int income, int available,int purchased) {
     public Statistics(int available) {
         this(0,available,0);

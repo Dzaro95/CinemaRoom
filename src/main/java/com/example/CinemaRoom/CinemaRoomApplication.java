@@ -1,7 +1,7 @@
 package com.example.CinemaRoom;
 
 import com.example.CinemaRoom.model.Seat;
-import com.example.CinemaRoom.model.Seats;
+//import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.repository.SeatsRepository;
 import com.example.CinemaRoom.service.SeatsInformation;
 import org.modelmapper.ModelMapper;
@@ -15,15 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class CinemaRoomApplication implements CommandLineRunner {
+public class CinemaRoomApplication {
+	/*
 	@Bean
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
 
+	 */
+
 	public static void main(String[] args) {
 		SpringApplication.run(CinemaRoomApplication.class, args);
 	}
+	/*
 	@Autowired
 	SeatsRepository seatsRepository;
 	@Override
@@ -32,7 +36,9 @@ public class CinemaRoomApplication implements CommandLineRunner {
 		Seats seats = new Seats();
 		seats.setRows(seatsInformation.ROWS);
 		seats.setColumns(seatsInformation.COLUMNS);
-		seats.setSeats(seatsInformation.getSEATS().get(0));
+		//seats.setSeats(seatsInformation.getSEATS().get(0));
 		seatsRepository.save(seats);
 	}
+
+	 */
 }
