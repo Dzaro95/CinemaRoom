@@ -12,11 +12,12 @@ public class PurchaseService {
     private SeatResponse seatResponse;
     private TicketResponse ticketResponse;
     private Map<String, SeatResponse> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
-
+    public PurchaseService(int available) {
+        this.statisticsService = new StatisticsService(available);
+    }
     public PurchaseService(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
     }
-
     public Seat returnTicket(String uuid) {
         if(allTicketPurchased.containsKey(uuid)) {
             seatResponse = allTicketPurchased.get(uuid);
@@ -27,7 +28,6 @@ public class PurchaseService {
             throw new PurchaseException("Wrong token!");
         }
     }
-
     public TicketResponse purchaseSeat(SeatResponse seat) {
         if (checkPurchased(seat)) {
             throw new PurchaseException("The ticket has been already purchased!");
@@ -52,11 +52,9 @@ public class PurchaseService {
     public TicketResponse getTicketPurchase() {
         return ticketResponse;
     }
-
     public SeatResponse getTicketReturn() {
         return seatResponse;
     }
-
     public StatisticsService getStatisticsService() {
         return statisticsService;
     }
