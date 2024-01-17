@@ -1,11 +1,11 @@
 package com.example.CinemaRoom;
 
 import com.example.CinemaRoom.exception.PurchaseException;
-import com.example.CinemaRoom.service.SeatsInformation;
+import com.example.CinemaRoom.model.Seats;
 
 public class Bound {
-    public static void isValid(SeatsInformation seatsInformation, int row, int column) {
-        if (seatsInformation.getROWS() < row || seatsInformation.getCOLUMNS() < column) {
+    public static void isValid(Seats seats, int row, int column) {
+        if (seats.getROWS() < row || seats.getCOLUMNS() < column) {
             throw new PurchaseException("The number of a row or a column is out of bounds!");
         } else if (row < 1 || column < 1) {
             throw new PurchaseException("The number of a row or a column is out of bounds!");

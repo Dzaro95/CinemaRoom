@@ -7,7 +7,7 @@ import java.util.List;
 
 public record SeatsDTO(
         //long id;
-        long rows,
+        int rows,
 
         int columns,
         List<Seat> seat)

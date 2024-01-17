@@ -1,18 +1,8 @@
 package com.example.CinemaRoom;
 
-import com.example.CinemaRoom.model.Seat;
 //import com.example.CinemaRoom.model.Seats;
-import com.example.CinemaRoom.repository.SeatsRepository;
-import com.example.CinemaRoom.service.SeatsInformation;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class CinemaRoomApplication {
