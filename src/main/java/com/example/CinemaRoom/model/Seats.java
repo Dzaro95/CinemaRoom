@@ -14,25 +14,33 @@ import java.util.List;
 public class Seats {
     @Id
     private long id;
-    @Column(name = "rows")
+    @Column(name = "rowsSeats")
     private final int ROWS = 9;
-    @Column(name = "columns")
+    @Column(name = "columnsSeats")
     private final int COLUMNS = 9;
-
+/*
     @OneToMany
     @JoinColumn(name = "seat_id")
     private final List<Seat> SEATS;
 
+ */
+
 
     public Seats() {
+/*
         List<Seat> seatList = new ArrayList<>();
         for (int row = 1; row <= this.ROWS; row++) {
             for (int column = 1; column <= this.COLUMNS; column++) {
-                seatList.add(new Seat(row,row, column, row <= 4 ? 10 : 8));
+                seatList.add(new Seat(row,column, row <= 4 ? 10 : 8));
             }
         }
         this.SEATS = seatList;
+
+ */
+
+
     }
+
     public int numberOfSeats() {
         return ROWS * COLUMNS;
     }

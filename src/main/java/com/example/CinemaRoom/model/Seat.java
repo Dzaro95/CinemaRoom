@@ -11,16 +11,13 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "seat")
+//@Table(name = "seat")
 public class Seat {
-    @Id
-    private long id;
-    @Column(name = "row")
+    @Column(name = "rowSeat")
     private int row;
-    @Column(name = "column")
+    @Column(name = "columnSeat")
     private int column;
-    @Column(name = "price")
+    @Column(name = "priceSeat")
     private int price;
 
 }

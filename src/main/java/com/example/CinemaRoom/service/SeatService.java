@@ -34,7 +34,10 @@ public class SeatService {
 
     }
 
+
+
     private SeatsDTO convertEntityToDto(Seats seats){
+
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         SeatsDTO seatsDTO = new SeatsDTO(seats.getROWS(), seats.getCOLUMNS(), seats.getSEATS());
