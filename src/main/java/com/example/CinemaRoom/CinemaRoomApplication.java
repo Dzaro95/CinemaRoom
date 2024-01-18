@@ -28,7 +28,7 @@ public class CinemaRoomApplication implements CommandLineRunner {
 
 		Seats seats = new Seats();
 
-		seatsRepository.save();
+		seatsRepository.save(seats);
 	}
 
 

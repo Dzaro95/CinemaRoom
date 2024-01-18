@@ -24,23 +24,26 @@ public class SeatService {
 
 
 
-    public List<SeatsDTO> getAllSeat(){
-        //return seatsRepository.findAll();
+    public List<Seats> getAllSeat(){
+        return seatsRepository.findAll();
+        /*
         return seatsRepository.findAll()
                 .stream()
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
 
+         */
+
 
     }
 
 
-
+/*
     private SeatsDTO convertEntityToDto(Seats seats){
 
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
-        SeatsDTO seatsDTO = new SeatsDTO(seats.getROWS(), seats.getCOLUMNS(), seats.getSEATS());
+        SeatsDTO seatsDTO = new SeatsDTO(seats.getROWS(), seats.getCOLUMNS());
         seatsDTO = modelMapper.map(seats, SeatsDTO.class);
         return seatsDTO;
     }
@@ -51,6 +54,8 @@ public class SeatService {
         seats = modelMapper.map(seatsDTO, Seats.class);
         return seats;
     }
+
+ */
 
 
 }

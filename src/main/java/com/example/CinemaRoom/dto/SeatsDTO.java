@@ -9,8 +9,7 @@ public record SeatsDTO(
         //long id;
         int rows,
 
-        int columns,
-        List<Seat> seat)
+        int columns)
 {}
 /*
 public class TicketReturn {

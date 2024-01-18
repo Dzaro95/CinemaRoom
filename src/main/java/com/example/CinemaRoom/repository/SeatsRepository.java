@@ -12,6 +12,4 @@ import java.util.List;
 
 @Repository
 public interface SeatsRepository extends JpaRepository<Seats, Long> {
-    @Query("from PData where data_id = ?1")
-    List<Seat> findByKey(String data_id);
 }

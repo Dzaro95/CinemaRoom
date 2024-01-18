@@ -26,7 +26,7 @@ public class MovieController {
      */
 
     @GetMapping("/seats")
-    public List<SeatsDTO> getSeats() {
+    public List<Seats> getSeats() {
         return seatService.getAllSeat();
         //return new SeatsResponse(seatsInformation.getROWS(), seatsInformation.getCOLUMNS(), seatsInformation.getSEATS());
     }
