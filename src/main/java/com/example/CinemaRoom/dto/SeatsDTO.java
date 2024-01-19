@@ -5,12 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 
-public record SeatsDTO(
-        //long id;
-        int rows,
-
-        int columns)
-{}
+public record SeatsDTO(int rows, int column, List<SeatDTO> seats) { }
 /*
 public class TicketReturn {
     private Seat ticket;

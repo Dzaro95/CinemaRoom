@@ -2,6 +2,7 @@ package com.example.CinemaRoom;
 
 //import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.model.Seats;
+import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.SeatsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,20 @@ public class CinemaRoomApplication implements CommandLineRunner {
 
 	@Autowired
 	private SeatsRepository seatsRepository;
+	@Autowired
+	private SeatRepository seatRepository;
+
+
+	public CinemaRoomApplication (SeatsRepository seatsRepository, SeatRepository seatRepository){
+		this.seatsRepository = seatsRepository;
+		this.seatRepository = seatRepository;
+
+	}
+
 	@Override
 	public void run(String... args) throws Exception {
 
 		Seats seats = new Seats();
-
 		seatsRepository.save(seats);
 	}
 

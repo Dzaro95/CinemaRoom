@@ -11,14 +11,23 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Table(name = "seat")
+@Entity
+@Table(name = "seats_place")
 public class Seat {
-    @Column(name = "rowSeat")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+
+    @Column(name = "row_seat")
     private int row;
-    @Column(name = "columnSeat")
     private int column;
-    @Column(name = "priceSeat")
     private int price;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "rows_seats")
+    private Seats seats;
 
 }
 
