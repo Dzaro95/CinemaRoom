@@ -9,11 +9,14 @@ import com.example.CinemaRoom.model.Ticket;
 import java.util.*;
 
 public class PurchaseService {
+
     private StatisticsService statisticsService;
     private Map<String, Seat> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
+
     public PurchaseService(StatisticsService statisticsService) {
         this.statisticsService =  statisticsService;
     }
+
     public Seat returnTicket(String token) {
         if(allTicketPurchased.containsKey(token)) {
             Seat seat = allTicketPurchased.get(token);
@@ -24,6 +27,7 @@ public class PurchaseService {
             throw new PurchaseException("Wrong token!");
         }
     }
+
     public Ticket purchaseSeat(Seat seat) {
         if(allTicketPurchased.containsValue(seat)) {
             throw new PurchaseException("The ticket has been already purchased!");
@@ -34,6 +38,7 @@ public class PurchaseService {
             return new Ticket(token,seat);
         }
     }
+
     public StatisticsService getStatisticsService() {
         return statisticsService;
     }

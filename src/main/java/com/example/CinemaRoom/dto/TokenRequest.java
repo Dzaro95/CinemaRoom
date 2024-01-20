@@ -1,4 +1,3 @@
 package com.example.CinemaRoom.dto;
 
-public record TokenRequest (String token){
-}
+public record TokenRequest (String token) {}
