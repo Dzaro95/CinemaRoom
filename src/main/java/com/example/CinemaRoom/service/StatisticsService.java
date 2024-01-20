@@ -7,20 +7,18 @@ public class StatisticsService {
     public StatisticsService(int available) {
         this.statistics = new Statistics(available);
     }
-    public Statistics registerPurchase(Statistics statistics, int income) {
-        return new Statistics(statistics.income() + income,
+    public void registerPurchase(int income) {
+
+       statistics =  new Statistics(statistics.income() + income,
                 statistics.available() - 1,
                 statistics.purchased() + 1);
     }
-    public Statistics registerReturn(Statistics statistics, int income) {
-        return new Statistics(statistics.income() - income,
+    public void registerReturn(int income) {
+        statistics = new Statistics(statistics.income() - income,
                 statistics.available() + 1,
                 statistics.purchased() - 1);
     }
     public Statistics getStatistics() {
         return statistics;
-    }
-    public void setStatistics(Statistics statistics) {
-        this.statistics = statistics;
     }
 }

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MovieController {
     private final SeatsService seatsService = new SeatsService();
-    private final PurchaseService purchaseService = new PurchaseService(seatsService.numberOfSeats());
+    private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
+    private final PurchaseService purchaseService = new PurchaseService(statisticsService);
     private final AuthenticationService authenticationService = new AuthenticationService();
     @GetMapping("/seats")
     public SeatsResponse getSeats() {

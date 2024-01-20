@@ -12,14 +12,14 @@ public class PurchaseService {
     private StatisticsService statisticsService;
 
     private Map<String, Seat> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
-    public PurchaseService(int available) {
-        this.statisticsService = new StatisticsService(available);
+    public PurchaseService(StatisticsService statisticsService) {
+        this.statisticsService =  statisticsService;
     }
     public Seat returnTicket(String token) {
         if(allTicketPurchased.containsKey(token)) {
             Seat seat = allTicketPurchased.get(token);
             allTicketPurchased.remove(token);
-           // statisticsService.setStatistics(statisticsService.registerReturn(statisticsService.getStatistics(),seatResponse.price()));
+            statisticsService.registerReturn(seat.price());
             return seat;
         } else {
             throw new PurchaseException("Wrong token!");
@@ -31,11 +31,7 @@ public class PurchaseService {
         } else {
             String token = UUID.randomUUID().toString();
             allTicketPurchased.put(token, seat);
-            /*statisticsService.setStatistics(statisticsService.registerPurchase(
-                    statisticsService.getStatistics(),
-                    ticketResponse.ticket().price()));
-
-             */
+            statisticsService.registerPurchase(seat.price());
             return new Ticket(token,seat);
         }
     }
