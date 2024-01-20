@@ -1,4 +1,6 @@
 package com.example.CinemaRoom.dto;
 
-public record TicketResponse(String token, SeatResponse ticket) {}
+import com.example.CinemaRoom.model.Ticket;
+
+public record TicketResponse(Ticket ticket) {}
 
