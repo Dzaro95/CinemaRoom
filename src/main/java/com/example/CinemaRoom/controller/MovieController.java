@@ -34,7 +34,6 @@ public class MovieController {
     @PostMapping("/purchase")
     public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
         Seat seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
-       // purchaseService.purchaseSeat(seat);
         return new TicketResponse(purchaseService.purchaseSeat(seat));
     }
 }

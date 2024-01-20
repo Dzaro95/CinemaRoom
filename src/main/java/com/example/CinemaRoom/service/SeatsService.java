@@ -1,9 +1,7 @@
 package com.example.CinemaRoom.service;
 
-
 import com.example.CinemaRoom.exception.PurchaseException;
 import com.example.CinemaRoom.model.Seat;
-
 import java.util.ArrayList;
 import java.util.List;
 

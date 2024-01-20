@@ -1,11 +1,8 @@
 package com.example.CinemaRoom.service;
 
-import com.example.CinemaRoom.dto.SeatResponse;
 import com.example.CinemaRoom.exception.PurchaseException;
-import com.example.CinemaRoom.dto.TicketResponse;
 import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.model.Ticket;
-
 import java.util.*;
 
 public class PurchaseService {
