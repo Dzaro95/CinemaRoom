@@ -10,7 +10,6 @@ import java.util.*;
 
 public class PurchaseService {
     private StatisticsService statisticsService;
-
     private Map<String, Seat> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
     public PurchaseService(StatisticsService statisticsService) {
         this.statisticsService =  statisticsService;

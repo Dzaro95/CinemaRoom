@@ -15,7 +15,7 @@ public class MovieController {
     @GetMapping("/seats")
     public SeatsResponse getSeats() {
 
-        return new SeatsResponse(seatsService.getROWS(), seatsService.getCOLUMNS(), seatsService.getSEATS());
+        return new SeatsResponse(seatsService.getRows(), seatsService.getColumns(), seatsService.getSeats());
     }
     @GetMapping("/stats")
     public StatisticsResponse showStatistics(@RequestParam(name = "password" ,required = false) String passwordRequest) {
