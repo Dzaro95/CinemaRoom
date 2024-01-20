@@ -33,10 +33,6 @@ public class SeatsService {
         }
     }
 
-    private int getPriceForRow(int row) {
-        return row <= PREMIUM_ROWS ? PREMIUM_PRICE : STANDARD_PRICE;
-    }
-
     public int getRows() {
         return ROWS;
     }
@@ -51,5 +47,9 @@ public class SeatsService {
 
     public int numberOfSeats() {
         return ROWS * COLUMNS;
+    }
+
+    private int getPriceForRow(int row) {
+        return row <= PREMIUM_ROWS ? PREMIUM_PRICE : STANDARD_PRICE;
     }
 }
