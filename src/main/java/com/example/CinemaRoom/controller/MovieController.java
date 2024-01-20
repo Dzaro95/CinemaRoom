@@ -1,37 +1,56 @@
 package com.example.CinemaRoom.controller;
 
-import com.example.CinemaRoom.dto.*;
-import com.example.CinemaRoom.model.Seat;
-import com.example.CinemaRoom.service.*;
+import com.example.CinemaRoom.exception.StatisticsInfoException;
+import com.example.CinemaRoom.seat.CheckBoundsNumberRowColumn;
+import com.example.CinemaRoom.purchase.ReturnTicket;
+import com.example.CinemaRoom.purchase.Ticket;
+import com.example.CinemaRoom.purchase.Token;
+import com.example.CinemaRoom.seat.*;
+import com.example.CinemaRoom.statistics.CompleteStatistics;
+import com.example.CinemaRoom.statistics.Password;
+import com.example.CinemaRoom.statistics.Statistics;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class MovieController {
-    private final SeatsService seatsService = new SeatsService();
-    private final PurchaseService purchaseService = new PurchaseService(seatsService.numberOfSeats());
-    private final AuthenticationService authenticationService = new AuthenticationService();
+    private Ticket ticket = new Ticket();
+    private Seats seats = SeatsInCinema.seats();
+    private CompleteStatistics completeStatistics = new CompleteStatistics();
+
     @GetMapping("/seats")
-    public SeatsResponse getSeats() {
-
-        return new SeatsResponse(seatsService.getROWS(), seatsService.getCOLUMNS(), seatsService.getSEATS());
+    public Seats getSeats() {
+        return seats;
     }
+
     @GetMapping("/stats")
-    public StatisticsResponse showStatistics(@RequestParam(name = "password" ,required = false) String passwordRequest) {
-        authenticationService.isValid(passwordRequest);
-        return new StatisticsResponse(purchaseService.getStatisticsService().getStatistics());
+    public Statistics showStatistics(@Validated @RequestParam Optional<String> password) {
+        if (Password.checkPassword(password)) {
+            return completeStatistics.getStatistics();
+        } else {
+            throw new StatisticsInfoException("The password is wrong!");
+        }
     }
+
     @PostMapping("/return")
-    public SeatResponse returnTicket(@RequestBody TokenRequest tokenRequest) {
-        Seat seat = purchaseService.returnTicket(tokenRequest.token());
-        return new SeatResponse(seat.row(),seat.column(),seat.price());
+    public ReturnTicket returnTicket(@RequestBody Token token) {
+        ticket.checkToken(token.getToken());
+        completeStatistics.returnTicket(ticket.priceForRow(token.getToken()));
+        return ticket.deleteTicket(token.getToken());
 
     }
+
     @PostMapping("/purchase")
-    public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
-        Seat seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
-        purchaseService.purchaseSeat(seat);
-        return new TicketResponse(purchaseService.getTicketPurchase().token(),
-                purchaseService.getTicketPurchase().ticket());
+    public Ticket purchaseSeat(@Validated @RequestBody Seat seat) {
+        CheckBoundsNumberRowColumn.check(seats, seat.getRow(), seat.getColumn());
+        Seat seatPurchase = new Seat(seat.getRow(), seat.getColumn(), PriceForSeat.checkPrice(seat.getRow()));
+        ticket.addPurchaseSeat(seatPurchase);
+        completeStatistics.addSoldTicket(seatPurchase.getPrice());
+        return ticket;
     }
+
+
+
 }
