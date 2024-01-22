@@ -1,24 +1,22 @@
 package com.example.CinemaRoom.exception;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandler {
+public class GlobalExceptionHandler {
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = {PurchaseInfoException.class})
-    public ResponseEntity<Object> handlePurchaseInfoException(PurchaseInfoException purchaseInfoException){
-        FormatException formatException = new FormatException(purchaseInfoException.getMessage());
-
+    @ExceptionHandler(value = {PurchaseException.class})
+    public ResponseEntity<Object> handlePurchaseInfoException(PurchaseException purchaseException) {
+        FormatException formatException = new FormatException(purchaseException.getMessage());
         return new ResponseEntity<>(formatException, HttpStatus.BAD_REQUEST);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = {StatisticsInfoException.class})
-    public ResponseEntity<Object> handleStatisticsInfoException(StatisticsInfoException statisticsInfoException){
-        FormatException formatException = new FormatException(statisticsInfoException.getMessage());
-
+    @ExceptionHandler(value = {UnauthorizedException.class})
+    public ResponseEntity<Object> handleStatisticsInfoException(UnauthorizedException unauthorizedException) {
+        FormatException formatException = new FormatException(unauthorizedException.getMessage());
         return new ResponseEntity<>(formatException, HttpStatus.UNAUTHORIZED);
     }
 }
