@@ -21,7 +21,7 @@ public class MovieController {
 
     @GetMapping("/stats")
     public StatisticsResponse showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
-        authenticationService.isValid(passwordRequest);
+        authenticationService.validate(passwordRequest);
         return new StatisticsResponse(purchaseService.getStatisticsService().getStatistics());
     }
 
