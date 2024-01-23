@@ -2,6 +2,7 @@ package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
 import com.example.CinemaRoom.model.Seat;
+import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.service.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class MovieController {
     @PostMapping("/purchase")
     public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
         Seat seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
-        return new TicketResponse(purchaseService.purchaseSeat(seat));
+        Ticket ticket = purchaseService.purchaseSeat(seat);
+        return new TicketResponse(ticket.token(), ticket.ticket());
     }
 }
