@@ -32,7 +32,7 @@ public class PurchaseService {
             String token = UUID.randomUUID().toString();
             allTicketPurchased.put(token, seat);
             statisticsService.registerPurchase(seat.price());
-            return new Ticket(token,seat);
+            return new Ticket(token, seat);
         }
     }
 
