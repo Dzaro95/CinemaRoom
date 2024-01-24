@@ -18,7 +18,7 @@ public class PurchaseService {
         if(allTicketPurchased.containsKey(token)) {
             Seat seat = allTicketPurchased.get(token);
             allTicketPurchased.remove(token);
-            statisticsService.registerReturn(seat.price());
+            statisticsService.registerReturn(seat.getPrice());
             return seat;
         } else {
             throw new PurchaseException("Wrong token!");
@@ -31,7 +31,7 @@ public class PurchaseService {
         } else {
             String token = UUID.randomUUID().toString();
             allTicketPurchased.put(token, seat);
-            statisticsService.registerPurchase(seat.price());
+            statisticsService.registerPurchase(seat.getPrice());
             return new Ticket(token, seat);
         }
     }
