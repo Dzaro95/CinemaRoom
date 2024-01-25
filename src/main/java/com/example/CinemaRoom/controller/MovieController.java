@@ -2,7 +2,6 @@ package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
 import com.example.CinemaRoom.model.Seat;
-import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,12 @@ public class MovieController {
     private final AuthenticationService authenticationService = new AuthenticationService();
 
     @GetMapping("/seats")
-    public SeatsDTO getSeats() {
-        return seatsService.covertSeatsToDTO(new Seats());
+    public SeatsResponse getSeats() {
+        return seatsService.covertSeatsToDTO();
     }
 
-    @GetMapping("/sea")
-    public List<Seat> getSea() {
+    @GetMapping("/seat")
+    public List<Seat> getSeat() {
         return seatsService.getAllSeatTest();
     }
 
@@ -38,14 +37,19 @@ public class MovieController {
 
     @PostMapping("/return")
     public SeatResponse returnTicket(@RequestBody TokenRequest tokenRequest) {
-        Seat seat = purchaseService.returnTicket(tokenRequest.token());
-        return new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice());
+        SeatResponse seat = purchaseService.returnTicket(tokenRequest.token());
+        return new SeatResponse(seat.row(), seat.column(), seat.price());
     }
 
     @PostMapping("/purchase")
     public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
-        Seat seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
+        SeatResponse seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
         Ticket ticket = purchaseService.purchaseSeat(seat);
         return new TicketResponse(ticket.token(), ticket.ticket());
+    }
+
+    @PostMapping("/seat")
+    public Seat createUser(@RequestBody Seat seat) {
+        return seatsService.createSeat(seat);
     }
 }

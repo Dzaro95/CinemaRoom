@@ -20,14 +20,14 @@ public class CinemaRoomApplication implements CommandLineRunner {
 	@Autowired
 	private SeatRepository seatRepository;
 
-	public CinemaRoomApplication(SeatsRepository seatsRepository, SeatRepository seatRepository){
-		this.seatsRepository = seatsRepository;
-		this.seatRepository = seatRepository;
-	}
-
 	@Bean
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
+	}
+
+	public CinemaRoomApplication(SeatsRepository seatsRepository, SeatRepository seatRepository){
+		this.seatsRepository = seatsRepository;
+		this.seatRepository = seatRepository;
 	}
 
 	public static void main(String[] args) {

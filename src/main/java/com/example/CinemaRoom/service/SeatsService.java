@@ -1,11 +1,12 @@
 package com.example.CinemaRoom.service;
 
-import com.example.CinemaRoom.dto.SeatDTO;
-import com.example.CinemaRoom.dto.SeatsDTO;
+import com.example.CinemaRoom.dto.SeatResponse;
+import com.example.CinemaRoom.dto.SeatsResponse;
 import com.example.CinemaRoom.exception.PurchaseException;
 import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.repository.SeatRepository;
+import com.example.CinemaRoom.repository.SeatsRepository;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,20 @@ public class SeatsService {
     private ModelMapper modelMapper;
     @Autowired
     private SeatRepository seatRepository;
+    @Autowired
+    private SeatsRepository seatsRepository;
+
     private static final int ROWS = 9;
     private static final int COLUMNS = 9;
     private static final int PREMIUM_ROWS = 4;
     private static final int PREMIUM_PRICE = 10;
     private static final int STANDARD_PRICE = 8;
-    private List<Seat> seats = new ArrayList<>();
+    private List<SeatResponse> seats = new ArrayList<>();
 
-    public Seat findSeat(int row, int column) {
-        Seat seat = new Seat(row, column, getPriceForRow(row));
+    public SeatResponse findSeat(int row, int column) {
+        System.out.println(seats.isEmpty());
+        checkSeatsDTOList();
+        SeatResponse seat = new SeatResponse(row, column, getPriceForRow(row));
         if (seats.contains(seat)) {
             return seat;
         } else {
@@ -54,8 +60,8 @@ public class SeatsService {
         return row <= PREMIUM_ROWS ? PREMIUM_PRICE : STANDARD_PRICE;
     }
 
-    public SeatsDTO convertSeatsToDTO(Seats seats) {
-        SeatsDTO dto = modelMapper.map(seats, SeatsDTO.class);
+    public SeatsResponse convertSeatsToDTO(Seats seats) {
+        SeatsResponse dto = modelMapper.map(seats, SeatsResponse.class);
         return dto;
     }
 
@@ -63,16 +69,40 @@ public class SeatsService {
         return seatRepository.findAll();
     }
 
-    public SeatsDTO covertSeatsToDTO(Seats seats) {
-        List<SeatDTO> seatDTO = seatRepository.findAll().stream()
-                .map(seat -> new SeatDTO(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
-        SeatsDTO dto = new SeatsDTO(seats.getROWS(), seats.getCOLUMNS(),seatDTO);
-        return dto;
+    public SeatsResponse covertSeatsToDTO() {
+        Seats seats = seatsRepository.findAll().stream().findFirst().get();
+        List<SeatResponse> seatResponse = seatRepository.findAll().stream()
+                .map(seat -> new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
+        SeatsResponse seatsResponse = new SeatsResponse(seats.getROWS(), seats.getCOLUMNS(), seatResponse);
+        return seatsResponse;
     }
 
-    public Seats converteDTOToSeats(SeatsDTO seatsDTO) {
+    public List<SeatResponse> fillSeats() {
+        List<SeatResponse> seatResponse = new ArrayList<>();
+        try {
+            seatResponse = seatRepository.findAll().stream()
+                    .map(seat -> new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
+            return seatResponse;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return seatResponse;
+    }
+
+    public Seats converteDTOToSeats(SeatsResponse seatsResponse) {
         Seats seats = new Seats();
         return seats;
+    }
+
+    private void checkSeatsDTOList() {
+        if(seats.isEmpty()) {
+            seats = seatRepository.findAll().stream()
+                    .map(seat -> new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
+        }
+    }
+
+    public Seat createSeat(Seat seat) {
+        return seatRepository.save(seat);
     }
 
 }
