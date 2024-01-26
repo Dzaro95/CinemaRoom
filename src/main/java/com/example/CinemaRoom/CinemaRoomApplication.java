@@ -16,9 +16,9 @@ import static com.example.CinemaRoom.Function.Function.seatList;
 public class CinemaRoomApplication implements CommandLineRunner {
 
 	@Autowired
-	private SeatsRepository seatsRepository;
+	private final SeatsRepository seatsRepository;
 	@Autowired
-	private SeatRepository seatRepository;
+	private final SeatRepository seatRepository;
 
 	@Bean
 	public ModelMapper modelMapper(){
