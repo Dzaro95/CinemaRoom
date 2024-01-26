@@ -17,12 +17,6 @@ public class Seats {
     private final int ROWS = 9;
     @Column(name = "columns_seats")
     private final int COLUMNS = 9;
-    @OneToMany(
-            mappedBy = "seats",
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-                }
-            )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "seats", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> SEATS;
 }

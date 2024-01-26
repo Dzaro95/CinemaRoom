@@ -21,7 +21,7 @@ public class Seat {
     @Column(name = "price_seat")
     private int price;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="seats_id")
+    @JoinColumn(name ="seats_id", nullable = false)
     private Seats seats;
 
     public Seat(int row, int column, int price) {
