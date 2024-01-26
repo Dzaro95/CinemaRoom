@@ -2,6 +2,7 @@ package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
 import com.example.CinemaRoom.model.Seat;
+import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class MovieController {
     }
 
     @GetMapping("/seat")
-    public List<Seat> getSeat() {
-        return seatsService.getAllSeatTest();
+    public List<Seats> getSeat() {
+        return seatsService.getAllSeatsTest();
     }
 
     @GetMapping("/stats")

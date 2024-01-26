@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "seats_place")
 public class Seat {
@@ -21,7 +20,8 @@ public class Seat {
     private int column;
     @Column(name = "price_seat")
     private int price;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="seats_id")
     private Seats seats;
 
     public Seat(int row, int column, int price) {

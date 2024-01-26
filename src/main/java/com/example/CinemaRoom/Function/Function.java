@@ -1,6 +1,8 @@
 package com.example.CinemaRoom.Function;
 
 import com.example.CinemaRoom.model.Seat;
+import com.example.CinemaRoom.model.Seats;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class Function {
                 seat.setRow(row);
                 seat.setColumn(column);
                 seat.setPrice(row <= 4 ? 10 : 8);
+                seat.setSeats(new Seats());
                 seatList.add(seat);
             }
         }

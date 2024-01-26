@@ -69,6 +69,10 @@ public class SeatsService {
         return seatRepository.findAll();
     }
 
+    public List<Seats> getAllSeatsTest(){
+        return seatsRepository.findAll();
+    }
+
     public SeatsResponse covertSeatsToDTO() {
         Seats seats = seatsRepository.findAll().stream().findFirst().get();
         List<SeatResponse> seatResponse = seatRepository.findAll().stream()
