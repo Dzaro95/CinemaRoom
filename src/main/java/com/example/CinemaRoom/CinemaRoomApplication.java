@@ -36,7 +36,7 @@ public class CinemaRoomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (!seatRepository.existsById(2)) {
+		if (!seatRepository.existsById(1)) {
 			Seats seats = new Seats();
 			seats.setSEATS(seatList(seats.getROWS(), seats.getCOLUMNS()));
 			seatsRepository.save(seats);
