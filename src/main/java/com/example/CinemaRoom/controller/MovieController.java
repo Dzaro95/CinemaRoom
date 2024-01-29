@@ -14,10 +14,9 @@ import java.util.List;
 @RestController
 public class MovieController {
 
-    @Autowired
     private final SeatsService seatsService = new SeatsService();
-    private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
-    private final PurchaseService purchaseService = new PurchaseService(statisticsService);
+   // private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
+    private final PurchaseService purchaseService = new PurchaseService();
     private final AuthenticationService authenticationService = new AuthenticationService();
 
     @GetMapping("/seats")
@@ -44,9 +43,7 @@ public class MovieController {
 
     @PostMapping("/purchase")
     public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
-        SeatResponse seat = seatsService.findSeat(purchaseRequest.row(), purchaseRequest.column());
-        Ticket ticket = purchaseService.purchaseSeat(seat);
-        return new TicketResponse(ticket.token(), ticket.ticket());
+        return purchaseService.ticketResponse(purchaseRequest.row(), purchaseRequest.column());
     }
 
     @PostMapping("/seat")

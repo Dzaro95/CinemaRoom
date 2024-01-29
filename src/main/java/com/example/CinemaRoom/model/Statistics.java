@@ -1,8 +1,21 @@
 package com.example.CinemaRoom.model;
 
-public record Statistics(int income, int available,int purchased) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
-    public Statistics(int available) {
-        this(0,available,0);
-    }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "statistics")
+public class Statistics {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int income = 0;
+    private int available;
+    private int purchased = 0;
 }

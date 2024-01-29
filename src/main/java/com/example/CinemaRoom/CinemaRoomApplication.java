@@ -1,8 +1,10 @@
 package com.example.CinemaRoom;
 
 import com.example.CinemaRoom.model.Seats;
+import com.example.CinemaRoom.model.Statistics;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.SeatsRepository;
+import com.example.CinemaRoom.repository.StatisticRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +21,8 @@ public class CinemaRoomApplication implements CommandLineRunner {
 	private final SeatsRepository seatsRepository;
 	@Autowired
 	private final SeatRepository seatRepository;
+	@Autowired
+	private StatisticRepository statisticRepository;
 
 	@Bean
 	public ModelMapper modelMapper(){
@@ -37,9 +41,12 @@ public class CinemaRoomApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		if (!seatRepository.existsById(1)) {
+			Statistics statistics = new Statistics();
 			Seats seats = new Seats();
 			seats.setSEATS(seatList(seats.getROWS(), seats.getCOLUMNS()));
+			statistics.setAvailable(seats.getSEATS().size());
 			seatsRepository.save(seats);
+			statisticRepository.save(statistics);
 		}
 	}
 }
