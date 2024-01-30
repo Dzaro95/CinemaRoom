@@ -18,9 +18,11 @@ public class MovieController {
 
     @Autowired
     private SeatsService seatsService;
-   // private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
     @Autowired
     private PurchaseService purchaseService;
+    @Autowired
+    private StatisticsService statisticsService;
+    @Autowired
     private AuthenticationService authenticationService;
 
     @GetMapping("/seats")
@@ -31,7 +33,7 @@ public class MovieController {
     @GetMapping("/stats")
     public StatisticsResponse showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
         authenticationService.validate(passwordRequest);
-        return new StatisticsResponse(purchaseService.getStatisticsService().getStatistics());
+        return new StatisticsResponse(statisticsService.getStatistic());
     }
 
     @PostMapping("/return")

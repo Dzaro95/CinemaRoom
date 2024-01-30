@@ -22,24 +22,6 @@ public class PurchaseService {
     private TicketRepository ticketRepository;
     @Autowired
     private StatisticsService statisticsService;
-    private Map<String, SeatResponse> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
-/*
-    public PurchaseService(StatisticsService statisticsService) {
-        this.statisticsService =  statisticsService;
-    }
-
- */
-
-    public SeatResponse aaareturnTicket(String token) {
-        if(allTicketPurchased.containsKey(token)) {
-            SeatResponse seat = allTicketPurchased.get(token);
-            allTicketPurchased.remove(token);
-           // statisticsService.registerReturn(seat.price());
-            return seat;
-        } else {
-            throw new PurchaseException("Wrong token!");
-        }
-    }
 
     public TicketResponse ticketResponse(int row, int column) {
         Ticket ticket = purchaseSeat(row, column).get(0);
@@ -50,7 +32,7 @@ public class PurchaseService {
     public List<Ticket> purchaseSeat(int row, int column) {
         Seat seat = findSeatByRowAndColumn(row, column);
         saveTicket(seat);
-       // statisticsService.registerPurchase(seat.getPrice());
+        statisticsService.registerPurchase(seat.getPrice());
         return ticketRepository.findTicketBySeat(seat.getId());
     }
 
@@ -78,7 +60,7 @@ public class PurchaseService {
             throw new PurchaseException("Wrong token!");
         }
         else {
-          return ticket.get(0) ;
+          return ticket.get(0);
         }
     }
 
@@ -86,6 +68,7 @@ public class PurchaseService {
         Ticket ticket = findSeatByToken(token);
         Seat seat = seatRepository.findById(ticket.getSeat()).get();
         ticketRepository.deleteById(token);
+        statisticsService.registerReturn(seat.getPrice());
         return new TicketResponse(ticket.getToken(), new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice()));
     }
 
