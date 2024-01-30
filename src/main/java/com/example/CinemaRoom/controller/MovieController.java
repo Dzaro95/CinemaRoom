@@ -1,17 +1,10 @@
 package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
-import com.example.CinemaRoom.model.Seat;
-import com.example.CinemaRoom.model.Seats;
-import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.service.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 @RestController
 public class MovieController {
@@ -27,13 +20,13 @@ public class MovieController {
 
     @GetMapping("/seats")
     public SeatsResponse getSeats() {
-        return seatsService.covertSeatsToDTO();
+        return seatsService.convertSeatsToDTO();
     }
 
     @GetMapping("/stats")
     public StatisticsResponse showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
         authenticationService.validate(passwordRequest);
-        return new StatisticsResponse(statisticsService.getStatistic());
+        return statisticsService.getStatistic().get(0);
     }
 
     @PostMapping("/return")
@@ -43,6 +36,6 @@ public class MovieController {
 
     @PostMapping("/purchase")
     public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
-        return purchaseService.ticketResponse(purchaseRequest.row(), purchaseRequest.column());
+        return purchaseService.purchaseTicket(purchaseRequest.row(), purchaseRequest.column());
     }
 }

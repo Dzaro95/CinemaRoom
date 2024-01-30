@@ -1,9 +1,10 @@
 package com.example.CinemaRoom.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
@@ -12,8 +13,7 @@ import javax.persistence.*;
 public class Statistics {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id = 1;
     private int income = 0;
     private int available;
     private int purchased = 0;

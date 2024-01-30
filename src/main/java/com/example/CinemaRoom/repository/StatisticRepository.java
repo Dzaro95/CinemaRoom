@@ -6,5 +6,3 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StatisticRepository extends JpaRepository<Statistics, Integer> {}
-
-

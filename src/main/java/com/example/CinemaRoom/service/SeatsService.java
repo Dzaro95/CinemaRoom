@@ -8,7 +8,7 @@ import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.SeatsRepository;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,55 +26,13 @@ public class SeatsService {
     private SeatRepository seatRepository;
     @Autowired
     private SeatsRepository seatsRepository;
-
     private static final int ROWS = 9;
     private static final int COLUMNS = 9;
     private static final int PREMIUM_ROWS = 4;
     private static final int PREMIUM_PRICE = 10;
     private static final int STANDARD_PRICE = 8;
-    private List<SeatResponse> seats = new ArrayList<>();
 
-    public SeatResponse findSeat(int row, int column) {
-        System.out.println(seats.isEmpty());
-        checkSeatsDTOList();
-        SeatResponse seat = new SeatResponse(row, column, getPriceForRow(row));
-        if (seats.contains(seat)) {
-            return seat;
-        } else {
-            throw new PurchaseException("The number of a row or a column is out of bounds!");
-        }
-    }
-
-    public int getRows() {
-        return ROWS;
-    }
-
-    public int getColumns() {
-        return COLUMNS;
-    }
-
-    public int numberOfSeats() {
-        return ROWS * COLUMNS;
-    }
-
-    private int getPriceForRow(int row) {
-        return row <= PREMIUM_ROWS ? PREMIUM_PRICE : STANDARD_PRICE;
-    }
-
-    public SeatsResponse convertSeatsToDTO(Seats seats) {
-        SeatsResponse dto = modelMapper.map(seats, SeatsResponse.class);
-        return dto;
-    }
-
-    public List<Seat> getAllSeatTest(){
-        return seatRepository.findAll();
-    }
-
-    public List<Seats> getAllSeatsTest(){
-        return seatsRepository.findAll();
-    }
-
-    public SeatsResponse covertSeatsToDTO() {
+    public SeatsResponse convertSeatsToDTO() {
         Seats seats = seatsRepository.findAll().stream().findFirst().get();
         List<SeatResponse> seatResponse = seatRepository.findAll().stream()
                 .map(seat -> new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
@@ -82,34 +40,29 @@ public class SeatsService {
         return seatsResponse;
     }
 
-    public List<SeatResponse> fillSeats() {
-        List<SeatResponse> seatResponse = new ArrayList<>();
-        try {
-            seatResponse = seatRepository.findAll().stream()
-                    .map(seat -> new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
-            return seatResponse;
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+    public Seat findSeatByRowAndColumn(int row, int column) {
+        if(seatRepository.findSeatByRowAndColumn(row, column).isEmpty()) {
+            throw new PurchaseException("The number of a row or a column is out of bounds!");
         }
-        return seatResponse;
-    }
-
-    public Seats converteDTOToSeats(SeatsResponse seatsResponse) {
-        Seats seats = new Seats();
-        return seats;
-    }
-
-
-
-    private void checkSeatsDTOList() {
-        if(seats.isEmpty()) {
-            seats = seatRepository.findAll().stream()
-                    .map(seat -> new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice())).collect(Collectors.toList());
+        else {
+            List<Seat> seat = seatRepository.findSeatByRowAndColumn(row, column);
+            return seat.get(0);
         }
     }
 
-    public Seat createSeat(Seat seat) {
-        return seatRepository.save(seat);
+    @NotNull
+    public static List<Seat> seatList() {
+        List<Seat> seatList = new ArrayList<>();
+        for (int row = 1; row <= ROWS; row++) {
+            for (int column = 1; column <= COLUMNS; column++) {
+                Seat seat = new Seat();
+                seat.setRow(row);
+                seat.setColumn(column);
+                seat.setPrice(row <= PREMIUM_ROWS ? PREMIUM_PRICE : STANDARD_PRICE);
+                seat.setSeats(new Seats());
+                seatList.add(seat);
+            }
+        }
+        return seatList;
     }
-
 }
