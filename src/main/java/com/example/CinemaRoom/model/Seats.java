@@ -1,5 +1,6 @@
 package com.example.CinemaRoom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -19,5 +20,6 @@ public class Seats {
     @Column(name = "columns_seats")
     private final int COLUMNS = 9;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seats", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Seat> SEATS;
 }

@@ -8,8 +8,6 @@ import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.SeatsRepository;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -20,8 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class SeatsService {
 
-    @Autowired
-    private ModelMapper modelMapper;
     @Autowired
     private SeatRepository seatRepository;
     @Autowired
@@ -50,8 +46,7 @@ public class SeatsService {
         }
     }
 
-    @NotNull
-    public static List<Seat> seatList() {
+    public List<Seat> seatList() {
         List<Seat> seatList = new ArrayList<>();
         for (int row = 1; row <= ROWS; row++) {
             for (int column = 1; column <= COLUMNS; column++) {

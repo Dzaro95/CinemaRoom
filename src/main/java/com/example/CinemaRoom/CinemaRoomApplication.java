@@ -7,12 +7,10 @@ import com.example.CinemaRoom.repository.SeatsRepository;
 import com.example.CinemaRoom.repository.StatisticRepository;
 import com.example.CinemaRoom.repository.TicketRepository;
 import com.example.CinemaRoom.service.SeatsService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class CinemaRoomApplication implements CommandLineRunner {
@@ -22,14 +20,11 @@ public class CinemaRoomApplication implements CommandLineRunner {
 	@Autowired
 	private final SeatRepository seatRepository;
 	@Autowired
-	private TicketRepository ticketRepository;
+	private final TicketRepository ticketRepository;
 	@Autowired
-	private StatisticRepository statisticRepository;
-
-	@Bean
-	public ModelMapper modelMapper(){
-		return new ModelMapper();
-	}
+	private final StatisticRepository statisticRepository;
+	@Autowired
+	private SeatsService seatsService;
 
 	public CinemaRoomApplication(SeatsRepository seatsRepository, SeatRepository seatRepository,
 								 TicketRepository ticketRepository,
@@ -49,7 +44,7 @@ public class CinemaRoomApplication implements CommandLineRunner {
 		if (seatRepository.findAll().isEmpty()) {
 			Statistics statistics = new Statistics();
 			Seats seats = new Seats();
-			seats.setSEATS(SeatsService.seatList());
+			seats.setSEATS(seatsService.seatList());
 			statistics.setAvailable(seats.getSEATS().size());
 			seatsRepository.save(seats);
 			statisticRepository.save(statistics);
