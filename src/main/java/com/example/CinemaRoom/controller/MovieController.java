@@ -5,28 +5,27 @@ import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 public class MovieController {
 
-    private final SeatsService seatsService = new SeatsService();
+    @Autowired
+    private SeatsService seatsService;
    // private final StatisticsService statisticsService = new StatisticsService(seatsService.numberOfSeats());
-    private final PurchaseService purchaseService = new PurchaseService();
-    private final AuthenticationService authenticationService = new AuthenticationService();
+    @Autowired
+    private PurchaseService purchaseService;
+    private AuthenticationService authenticationService;
 
     @GetMapping("/seats")
     public SeatsResponse getSeats() {
         return seatsService.covertSeatsToDTO();
-    }
-
-    @GetMapping("/seat")
-    public List<Seats> getSeat() {
-        return seatsService.getAllSeatsTest();
     }
 
     @GetMapping("/stats")
@@ -37,17 +36,11 @@ public class MovieController {
 
     @PostMapping("/return")
     public SeatResponse returnTicket(@RequestBody TokenRequest tokenRequest) {
-        SeatResponse seat = purchaseService.returnTicket(tokenRequest.token());
-        return new SeatResponse(seat.row(), seat.column(), seat.price());
+        return purchaseService.returnTicket(tokenRequest.token()).ticket();
     }
 
     @PostMapping("/purchase")
     public TicketResponse ticketPurchase(@Validated @RequestBody PurchaseRequest purchaseRequest) {
         return purchaseService.ticketResponse(purchaseRequest.row(), purchaseRequest.column());
-    }
-
-    @PostMapping("/seat")
-    public Seat createUser(@RequestBody Seat seat) {
-        return seatsService.createSeat(seat);
     }
 }

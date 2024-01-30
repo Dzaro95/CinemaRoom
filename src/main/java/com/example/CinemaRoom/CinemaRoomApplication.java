@@ -5,6 +5,7 @@ import com.example.CinemaRoom.model.Statistics;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.SeatsRepository;
 import com.example.CinemaRoom.repository.StatisticRepository;
+import com.example.CinemaRoom.repository.TicketRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +23,8 @@ public class CinemaRoomApplication implements CommandLineRunner {
 	@Autowired
 	private final SeatRepository seatRepository;
 	@Autowired
+	private TicketRepository ticketRepository;
+	@Autowired
 	private StatisticRepository statisticRepository;
 
 	@Bean
@@ -29,9 +32,13 @@ public class CinemaRoomApplication implements CommandLineRunner {
 		return new ModelMapper();
 	}
 
-	public CinemaRoomApplication(SeatsRepository seatsRepository, SeatRepository seatRepository){
+	public CinemaRoomApplication(SeatsRepository seatsRepository, SeatRepository seatRepository,
+								 TicketRepository ticketRepository,
+								 StatisticRepository statisticRepository) {
 		this.seatsRepository = seatsRepository;
 		this.seatRepository = seatRepository;
+		this.ticketRepository = ticketRepository;
+		this.statisticRepository = statisticRepository;
 	}
 
 	public static void main(String[] args) {

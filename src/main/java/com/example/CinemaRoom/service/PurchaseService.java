@@ -7,6 +7,7 @@ import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.TicketRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class PurchaseService {
     private SeatRepository seatRepository;
     @Autowired
     private TicketRepository ticketRepository;
-
+    @Autowired
     private StatisticsService statisticsService;
     private Map<String, SeatResponse> allTicketPurchased = Collections.synchronizedMap(new HashMap<>());
 /*
@@ -29,7 +30,7 @@ public class PurchaseService {
 
  */
 
-    public SeatResponse returnTicket(String token) {
+    public SeatResponse aaareturnTicket(String token) {
         if(allTicketPurchased.containsKey(token)) {
             SeatResponse seat = allTicketPurchased.get(token);
             allTicketPurchased.remove(token);
@@ -54,11 +55,11 @@ public class PurchaseService {
     }
 
     public Seat findSeatByRowAndColumn(int row, int column) {
-        List<Seat> seat = seatRepository.findSeatByRowAndColumn(row, column);
-        if(seat.isEmpty()) {
+        if(seatRepository.findSeatByRowAndColumn(row, column).isEmpty()) {
             throw new PurchaseException("The number of a row or a column is out of bounds!");
         }
         else {
+            List<Seat> seat = seatRepository.findSeatByRowAndColumn(row, column);
             return seat.get(0);
         }
     }
@@ -71,15 +72,21 @@ public class PurchaseService {
         }
     }
 
-    public TicketResponse findSeatByToken(String token) {
+    public Ticket findSeatByToken(String token) {
         List<Ticket> ticket = ticketRepository.findAllById(Collections.singleton(token));
         if(ticket.isEmpty()) {
             throw new PurchaseException("Wrong token!");
         }
         else {
-           // return ticket.get(0);
+          return ticket.get(0) ;
         }
-        return null;
+    }
+
+    public TicketResponse returnTicket(String token) {
+        Ticket ticket = findSeatByToken(token);
+        Seat seat = seatRepository.findById(ticket.getSeat()).get();
+        ticketRepository.deleteById(token);
+        return new TicketResponse(ticket.getToken(), new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice()));
     }
 
     public StatisticsService getStatisticsService() {

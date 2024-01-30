@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "ticket")
 public class Ticket {
@@ -22,4 +21,9 @@ public class Ticket {
     String token;
     @Column(name = "seat")
     int seat;
+
+    public Ticket(String token, int seat) {
+        this.token = token;
+        this.seat = seat;
+    }
 }

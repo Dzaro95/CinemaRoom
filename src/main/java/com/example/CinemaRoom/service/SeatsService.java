@@ -8,6 +8,7 @@ import com.example.CinemaRoom.model.Seats;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.SeatsRepository;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,8 @@ public class SeatsService {
         Seats seats = new Seats();
         return seats;
     }
+
+
 
     private void checkSeatsDTOList() {
         if(seats.isEmpty()) {

@@ -1,7 +1,9 @@
 package com.example.CinemaRoom.service;
 
 import com.example.CinemaRoom.model.Statistics;
+import org.springframework.stereotype.Service;
 
+@Service
 public class StatisticsService {
 
     private Statistics statistics;
