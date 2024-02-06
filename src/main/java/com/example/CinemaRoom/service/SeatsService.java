@@ -5,6 +5,7 @@ import com.example.CinemaRoom.dto.SeatsResponse;
 import com.example.CinemaRoom.exception.PurchaseException;
 import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.repository.SeatRepository;
+import com.example.CinemaRoom.repository.TicketRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,17 @@ import java.util.stream.Collectors;
 @Service
 public class SeatsService {
 
-    @Autowired
     private SeatRepository seatRepository;
     private static final int ROWS = 9;
     private static final int COLUMNS = 9;
     private static final int PREMIUM_ROWS = 4;
     private static final int PREMIUM_PRICE = 10;
     private static final int STANDARD_PRICE = 8;
+
+    @Autowired
+    public void CinemaRoomApplication(SeatRepository seatRepository) {
+        this.seatRepository = seatRepository;
+    }
 
     public SeatsResponse getSeats() {
         return convertSeatToSeatsResponse();

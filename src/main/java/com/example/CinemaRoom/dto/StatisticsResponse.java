@@ -1,3 +1,5 @@
 package com.example.CinemaRoom.dto;
 
-public record StatisticsResponse(int income, int available, int purchased) {}
+import com.example.CinemaRoom.model.Statistics;
+
+public record StatisticsResponse(Statistics statistics) {}

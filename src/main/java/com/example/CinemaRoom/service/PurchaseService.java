@@ -16,12 +16,17 @@ import java.util.UUID;
 @Service
 public class PurchaseService {
 
-    @Autowired
     private SeatRepository seatRepository;
-    @Autowired
     private TicketRepository ticketRepository;
+
     @Autowired
     private SeatsService seatsService;
+
+    @Autowired
+    public void CinemaRoomApplication(SeatRepository seatRepository,TicketRepository ticketRepository) {
+        this.seatRepository = seatRepository;
+        this.ticketRepository = ticketRepository;
+    }
 
     private void saveTicket(Seat seat) {
         if (!ticketRepository.findTicketBySeat(seat.getId()).isEmpty()) {

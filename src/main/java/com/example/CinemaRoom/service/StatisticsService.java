@@ -6,22 +6,25 @@ import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Service
 public class StatisticsService {
 
-    @Autowired
     private SeatRepository seatRepository;
-    @Autowired
     private TicketRepository ticketRepository;
     private Statistics statistics;
 
-    public void generateAvailable() {
-        statistics =  new Statistics(seatRepository.findAll().size());
+    @Autowired
+    public void CinemaRoomApplication(SeatRepository seatRepository,TicketRepository ticketRepository) {
+        this.seatRepository = seatRepository;
+        this.ticketRepository = ticketRepository;
     }
 
-    public Statistics getStatistic() {
+    private void generateStatistics() {
         generateAvailable();
         List<Seat> seatList = new ArrayList<>();
         List<Ticket> ticketList = ticketRepository.findAll();
@@ -29,9 +32,18 @@ public class StatisticsService {
             seatList.add(seatRepository.findById((ticket.getSeat())).get());
         }
         seatList.forEach(seat -> {
-            statistics = new Statistics(statistics.purchased() + seat.getPrice(),
-                    statistics.available(), statistics.income() + 1);
+            statistics = new Statistics(statistics.income() + 1,
+                    statistics.available() - 1, statistics.purchased() + seat.getPrice());
         });
+    }
+
+    private void generateAvailable() {
+        statistics =  new Statistics(seatRepository.findAll().size());
+    }
+
+    public Statistics getStatistic() {
+        generateStatistics();
         return statistics;
     }
+
 }

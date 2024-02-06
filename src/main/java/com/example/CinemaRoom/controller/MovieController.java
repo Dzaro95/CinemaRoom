@@ -14,7 +14,7 @@ public class MovieController {
     private SeatsService seatsService;
     @Autowired
     private PurchaseService purchaseService;
-
+    @Autowired
     private StatisticsService statisticsService;
     @Autowired
     private AuthenticationService authenticationService;
