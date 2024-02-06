@@ -1,13 +1,8 @@
 package com.example.CinemaRoom.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record Statistics(int income, int available,int purchased) {
 
-@Data
-@NoArgsConstructor
-public class Statistics {
-
-    private int income = 0;
-    private int available;
-    private int purchased = 0;
+    public Statistics(int available) {
+        this(0,available,0);
+    }
 }
