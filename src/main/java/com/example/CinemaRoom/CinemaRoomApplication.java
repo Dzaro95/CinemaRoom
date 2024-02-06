@@ -13,8 +13,10 @@ public class CinemaRoomApplication implements CommandLineRunner {
 
 	@Autowired
 	private final SeatRepository seatRepository;
+
 	@Autowired
 	private final TicketRepository ticketRepository;
+
 	@Autowired
 	private SeatsService seatsService;
 

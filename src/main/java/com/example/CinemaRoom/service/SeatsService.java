@@ -5,11 +5,9 @@ import com.example.CinemaRoom.dto.SeatsResponse;
 import com.example.CinemaRoom.exception.PurchaseException;
 import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.repository.SeatRepository;
-import com.example.CinemaRoom.repository.TicketRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

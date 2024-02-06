@@ -3,10 +3,7 @@ package com.example.CinemaRoom.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +16,7 @@ public class Ticket {
     @Column(name = "token")
     String token;
 
-    @Column(name = "seatID")
-    int seat;
+    @OneToOne
+    @JoinColumn(name = "seat_id", nullable = false)
+    private Seat seat;
 }

@@ -29,10 +29,10 @@ public class PurchaseService {
     }
 
     private void saveTicket(Seat seat) {
-        if (!ticketRepository.findTicketBySeat(seat.getId()).isEmpty()) {
+        if (!ticketRepository.findTicketBySeat(seat).isEmpty()) {
             throw new PurchaseException("The ticket has been already purchased!");
         } else {
-            ticketRepository.save(new Ticket(UUID.randomUUID().toString(), seat.getId()));
+            ticketRepository.save(new Ticket(UUID.randomUUID().toString(), seat));
         }
     }
 
@@ -49,18 +49,18 @@ public class PurchaseService {
     private Ticket purchaseSeat(int row, int column) {
         Seat seat = seatsService.findSeatByRowAndColumn(row, column);
         saveTicket(seat);
-        return ticketRepository.findTicketBySeat(seat.getId()).get(0);
+        return ticketRepository.findTicketBySeat(seat).get(0);
     }
 
     public TicketResponse purchaseTicket(int row, int column) {
         Ticket ticket = purchaseSeat(row, column);
-        Seat seat = seatRepository.findById(ticket.getSeat()).get();
+        Seat seat = seatRepository.findById(ticket.getSeat().getId()).get();
         return new TicketResponse(ticket.getToken(), new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice()));
     }
 
     public TicketResponse returnTicket(String token) {
         Ticket ticket = findSeatByToken(token);
-        Seat seat = seatRepository.findById(ticket.getSeat()).get();
+        Seat seat = seatRepository.findById(ticket.getSeat().getId()).get();
         ticketRepository.deleteById(token);
         return new TicketResponse(ticket.getToken(), new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice()));
     }

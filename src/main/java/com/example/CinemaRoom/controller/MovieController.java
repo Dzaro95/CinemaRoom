@@ -1,7 +1,6 @@
 package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
-import com.example.CinemaRoom.model.Statistics;
 import com.example.CinemaRoom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -12,10 +11,13 @@ public class MovieController {
 
     @Autowired
     private SeatsService seatsService;
+
     @Autowired
     private PurchaseService purchaseService;
+
     @Autowired
     private StatisticsService statisticsService;
+
     @Autowired
     private AuthenticationService authenticationService;
 

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class StatisticsService {
 
@@ -29,7 +28,7 @@ public class StatisticsService {
         List<Seat> seatList = new ArrayList<>();
         List<Ticket> ticketList = ticketRepository.findAll();
         for (Ticket ticket : ticketList) {
-            seatList.add(seatRepository.findById((ticket.getSeat())).get());
+            seatList.add(seatRepository.findById((ticket.getSeat().getId())).get());
         }
         seatList.forEach(seat -> {
             statistics = new Statistics(statistics.income() + 1,
