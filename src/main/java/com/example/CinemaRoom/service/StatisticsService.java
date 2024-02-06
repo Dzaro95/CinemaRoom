@@ -1,11 +1,12 @@
 package com.example.CinemaRoom.service;
 
+import com.example.CinemaRoom.model.Seat;
 import com.example.CinemaRoom.model.Statistics;
 import com.example.CinemaRoom.model.Ticket;
 import com.example.CinemaRoom.repository.SeatRepository;
 import com.example.CinemaRoom.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsService {
@@ -20,11 +21,16 @@ public class StatisticsService {
         statistics =  new Statistics(seatRepository.findAll().size());
     }
 
-    public Statistics getStatistics() {
+    public Statistics getStatistic() {
         generateAvailable();
+        List<Seat> seatList = new ArrayList<>();
         List<Ticket> ticketList = ticketRepository.findAll();
-        ticketList.forEach(ticket -> {
-            statistics.set ticketRepository.findTicketBySeat(ticket.getSeat())
+        for (Ticket ticket : ticketList) {
+            seatList.add(seatRepository.findById((ticket.getSeat())).get());
+        }
+        seatList.forEach(seat -> {
+            statistics = new Statistics(statistics.purchased() + seat.getPrice(),
+                    statistics.available(), statistics.income() + 1);
         });
         return statistics;
     }

@@ -1,6 +1,7 @@
 package com.example.CinemaRoom.controller;
 
 import com.example.CinemaRoom.dto.*;
+import com.example.CinemaRoom.model.Statistics;
 import com.example.CinemaRoom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -14,7 +15,7 @@ public class MovieController {
     @Autowired
     private PurchaseService purchaseService;
 
-    //private StatisticsService statisticsService;
+    private StatisticsService statisticsService;
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -24,9 +25,9 @@ public class MovieController {
     }
 
     @GetMapping("/stats")
-    public void showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
+    public StatisticsResponse showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
         authenticationService.validate(passwordRequest);
-        //return statisticsService.getStatistic();
+        return new StatisticsResponse(statisticsService.getStatistic());
     }
 
     @PostMapping("/return")
