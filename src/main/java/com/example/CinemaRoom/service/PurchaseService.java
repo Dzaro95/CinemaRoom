@@ -22,8 +22,6 @@ public class PurchaseService {
     private TicketRepository ticketRepository;
     @Autowired
     private SeatsService seatsService;
-    @Autowired
-    private StatisticsService statisticsService;
 
     private void saveTicket(Seat seat) {
         if (!ticketRepository.findTicketBySeat(seat.getId()).isEmpty()) {
@@ -46,7 +44,7 @@ public class PurchaseService {
     private Ticket purchaseSeat(int row, int column) {
         Seat seat = seatsService.findSeatByRowAndColumn(row, column);
         saveTicket(seat);
-        statisticsService.registerPurchase(seat.getPrice());
+        //statisticsService.registerPurchase(seat.getPrice());
         return ticketRepository.findTicketBySeat(seat.getId()).get(0);
     }
 
@@ -60,7 +58,7 @@ public class PurchaseService {
         Ticket ticket = findSeatByToken(token);
         Seat seat = seatRepository.findById(ticket.getSeat()).get();
         ticketRepository.deleteById(token);
-        statisticsService.registerReturn(seat.getPrice());
+       // statisticsService.registerReturn(seat.getPrice());
         return new TicketResponse(ticket.getToken(), new SeatResponse(seat.getRow(), seat.getColumn(), seat.getPrice()));
     }
 }

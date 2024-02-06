@@ -13,20 +13,20 @@ public class MovieController {
     private SeatsService seatsService;
     @Autowired
     private PurchaseService purchaseService;
-    @Autowired
-    private StatisticsService statisticsService;
+
+    //private StatisticsService statisticsService;
     @Autowired
     private AuthenticationService authenticationService;
 
     @GetMapping("/seats")
     public SeatsResponse getSeats() {
-        return seatsService.convertSeatsToDTO();
+        return seatsService.getSeats();
     }
 
     @GetMapping("/stats")
-    public StatisticsResponse showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
+    public void showStatistics(@RequestParam(name = "password", required = false) String passwordRequest) {
         authenticationService.validate(passwordRequest);
-        return statisticsService.getStatistic().get(0);
+        //return statisticsService.getStatistic();
     }
 
     @PostMapping("/return")

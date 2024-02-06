@@ -18,6 +18,6 @@ public class Ticket {
     @Id
     @Column(name = "token")
     String token;
-    @Column(name = "seat")
+    @Column(name = "seatID")
     int seat;
 }
