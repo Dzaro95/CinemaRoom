@@ -1,26 +1,31 @@
 package com.example.CinemaRoom.service;
 
-import com.example.CinemaRoom.dto.StatisticsResponse;
 import com.example.CinemaRoom.model.Statistics;
-import org.springframework.stereotype.Service;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.example.CinemaRoom.model.Ticket;
+import com.example.CinemaRoom.repository.SeatRepository;
+import com.example.CinemaRoom.repository.TicketRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Service
+import java.util.List;
+
 public class StatisticsService {
 
-    Statistics statistics;
-    private final int ONE_TICKET = 1;
+    @Autowired
+    private SeatRepository seatRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
+    private Statistics statistics;
 
-    public void registerPurchase(int income) {
-        ;
+    public void generateAvailable() {
+        statistics =  new Statistics(seatRepository.findAll().size());
     }
 
-    public void registerReturn(int income) {
-        ;
-    }
-
-    public void getStatistic() {
-
+    public Statistics getStatistics() {
+        generateAvailable();
+        List<Ticket> ticketList = ticketRepository.findAll();
+        ticketList.forEach(ticket -> {
+            statistics.set ticketRepository.findTicketBySeat(ticket.getSeat())
+        });
+        return statistics;
     }
 }

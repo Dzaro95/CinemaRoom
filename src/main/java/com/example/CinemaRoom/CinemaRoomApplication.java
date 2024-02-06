@@ -1,9 +1,6 @@
 package com.example.CinemaRoom;
 
 import com.example.CinemaRoom.repository.SeatRepository;
-//import com.example.CinemaRoom.repository.SeatsRepository;
-//import com.example.CinemaRoom.repository.StatisticRepository;
-import com.example.CinemaRoom.repository.TicketRepository;
 import com.example.CinemaRoom.service.SeatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,17 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CinemaRoomApplication implements CommandLineRunner {
 
-	//private final SeatsRepository seatsRepository;
 	private final SeatRepository seatRepository;
-	private final TicketRepository ticketRepository;
 	@Autowired
 	private SeatsService seatsService;
 
 	@Autowired
-	public CinemaRoomApplication(SeatRepository seatRepository,
-								 TicketRepository ticketRepository) {
+	public CinemaRoomApplication(SeatRepository seatRepository) {
 		this.seatRepository = seatRepository;
-		this.ticketRepository = ticketRepository;
 	}
 
 	public static void main(String[] args) {
